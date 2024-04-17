@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     private final RoleService roleService;
@@ -19,7 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/user/create")
+    @GetMapping("/create")
     public String createUser(Model model){
 
     model.addAttribute("user", new UserDTO());
@@ -29,7 +30,7 @@ public class UserController {
         return "/user/create";
     }
 
-    @PostMapping("/user/create")
+    @PostMapping("/create")
     public String insertUser(@ModelAttribute("user") UserDTO user){
 
         userService.save(user);
@@ -39,7 +40,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/user/update/{username}")
+    @GetMapping("/update/{username}")
     public String editUser(@PathVariable("username") String username, Model model){
         model.addAttribute("user", userService.findById(username));
         model.addAttribute("roles", roleService.findAll());
@@ -48,7 +49,7 @@ public class UserController {
         return "/user/update";
     }
 
-    @PostMapping("/user/update")
+    @PostMapping("/update")
     public String updateUser(@ModelAttribute("user") UserDTO user){
 
         userService.update(user);
@@ -56,6 +57,14 @@ public class UserController {
 
         return "redirect:/user/create";
 
+    }
+
+    @GetMapping("delete/{username}")
+    public String deleteUser(@PathVariable("username") String username, Model model){
+
+      userService.deleteById(username);
+
+        return "redirect:/user/create";
     }
 
 }
