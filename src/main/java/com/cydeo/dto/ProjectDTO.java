@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 
-
 public class ProjectDTO {
 
     private String projectName;
@@ -26,5 +25,7 @@ public class ProjectDTO {
     private LocalDate projectEndDate;
     private String projectDetail;
     private ProjectStatus status;
+
+
 
 }

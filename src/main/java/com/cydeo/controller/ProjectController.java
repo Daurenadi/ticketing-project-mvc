@@ -2,6 +2,7 @@ package com.cydeo.controller;
 
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.UserDTO;
+import com.cydeo.enums.ProjectStatus;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.RoleService;
 import com.cydeo.service.UserService;
@@ -17,12 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProjectController {
     private final UserService userService;
     private final ProjectService projectService;
-    private final RoleService roleService;
 
-    public ProjectController(UserService userService, ProjectService projectService, RoleService roleService) {
+
+    public ProjectController(UserService userService, ProjectService projectService) {
         this.userService = userService;
         this.projectService = projectService;
-        this.roleService = roleService;
     }
 
     @GetMapping("/create")
