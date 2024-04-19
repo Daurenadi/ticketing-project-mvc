@@ -62,14 +62,14 @@ public class TaskController {
 
         model.addAttribute("task", taskService.findById(taskId));
         model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("employess", userService.findEmployees());
+        model.addAttribute("employees", userService.findEmployees());
         model.addAttribute("tasks", taskService.findAll());
 
-        return "redirect:/task/update";
+        return "/task/update";
     }
 
-    @PostMapping("/update/{taskId}")
-    private String updateTask(@PathVariable("taskID") Long taskId, TaskDTO task){
+    @PostMapping("/update/{id}")
+    private String updateTask(TaskDTO task){
 
         taskService.update(task);
 
