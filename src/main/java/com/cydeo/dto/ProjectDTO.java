@@ -25,7 +25,16 @@ public class ProjectDTO {
     private LocalDate projectEndDate;
     private String projectDetail;
     private ProjectStatus status;
+    private int completeTaskCounts;
+    private int unfinishedTaskCounts;
 
-
-
+    public ProjectDTO(String projectName, String projectCode, UserDTO userDTO, LocalDate assignedDate, LocalDate projectEndDate, String projectDetail, ProjectStatus status) {
+        this.projectName = projectName;
+        this.projectCode = projectCode;
+        this.userDTO = userDTO;
+        this.assignedDate = assignedDate;
+        this.projectEndDate = projectEndDate;
+        this.projectDetail = projectDetail;
+        this.status = status;
+    }
 }
