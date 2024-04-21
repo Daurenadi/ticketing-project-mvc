@@ -8,12 +8,11 @@ import com.cydeo.service.UserService;
 import jdk.javadoc.doclet.DocletEnvironment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.StringBufferInputStream;
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/task")
@@ -98,9 +97,30 @@ public class TaskController {
     @GetMapping("/employee/edit/{id}")
     public String employeeEditTask(@PathVariable Long id, Model model){
 
+      model.addAttribute("task", taskService.findById(id));
 
+        model.addAttribute("statuses", ProjectStatus.values());
+        model.addAttribute("tasks", taskService.findAllPendingTasks(ProjectStatus.COMPLETE));
 
         return "/task/status-update";
+    }
+
+    @PostMapping("/employee/update/{id}")
+    public String employeeUpdateTask(@Valid @ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("statuses", ProjectStatus.values());
+            model.addAttribute("tasks", taskService.findAllPendingTasks(ProjectStatus.COMPLETE));
+
+            return "/task/status-update";
+
+        }
+
+        taskService.updateTask(task);
+
+        return "redirect:/task/employee/pending-tasks";
+
     }
 
 
