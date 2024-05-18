@@ -1,0 +1,4 @@
+INSERT INTO roles (description, insert_date_time, insert_user_id, last_update_date_time, last_update_user_id, is_deleted) VALUES
+                                                                                                                              ('Admin', NOW(), 1, NOW(), 1, false),
+                                                                                                                              ('Manager', NOW(), 1, NOW(), 1, false),
+                                                                                                                              ('Employee', NOW(), 1, NOW(), 1, false);
