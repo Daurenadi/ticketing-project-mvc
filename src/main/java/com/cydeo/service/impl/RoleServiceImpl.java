@@ -5,9 +5,7 @@ import com.cydeo.entity.Role;
 import com.cydeo.mapper.RoleMapper;
 import com.cydeo.repository.RoleRepository;
 import com.cydeo.service.RoleService;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 

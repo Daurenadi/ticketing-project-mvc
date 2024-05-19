@@ -1,3 +1,4 @@
+
 package com.cydeo.controller;
 
 import com.cydeo.dto.UserDTO;
@@ -5,6 +6,7 @@ import com.cydeo.service.RoleService;
 import com.cydeo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -29,13 +31,14 @@ public class UserController {
         return "/user/create";
     }
 
-   /* @PostMapping("/create")
-    public String insertUser(@Valid @ModelAttribute("user") UserDTO user, BindingResult bindingResult,
+
+ @PostMapping("/create")
+    public String insertUser(@ModelAttribute("user") UserDTO user, BindingResult bindingResult,
     Model model){
 
         if(bindingResult.hasErrors()){
-            model.addAttribute("roles", roleService.findAll());
-            model.addAttribute("users", userService.findAll());
+            model.addAttribute("roles", roleService.listAllRoles());
+            model.addAttribute("users", userService.listAllUsers());
             return "/user/create";
         }
         userService.save(user);
@@ -44,7 +47,7 @@ public class UserController {
         return "redirect:/user/create";
 
     }
-
+/*
     @GetMapping("/update/{username}")
     public String editUser(@PathVariable("username") String username, Model model){
         model.addAttribute("user", userService.findById(username));
@@ -70,6 +73,7 @@ public class UserController {
       userService.deleteById(username);
 
         return "redirect:/user/create";
-    }
- */
+    }*/
+
 }
+
