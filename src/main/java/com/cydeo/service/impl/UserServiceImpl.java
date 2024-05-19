@@ -1,6 +1,7 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.dto.UserDTO;
+import com.cydeo.entity.Role;
 import com.cydeo.entity.User;
 import com.cydeo.mapper.UserMapper;
 import com.cydeo.repository.UserRepository;
@@ -31,5 +32,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(UserDTO user) {
         userRepository.save(userMapper.convertToEntity(user));
+    }
+
+    @Override
+    public UserDTO findById(Long Id) {
+        User user = userRepository.findById(Id)
+                .orElseThrow(() -> new IllegalArgumentException("Role not found for id: " + Id));
+        return userMapper.convertToDTO(user);
     }
 }

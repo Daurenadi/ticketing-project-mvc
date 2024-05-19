@@ -28,7 +28,7 @@ public class BaseEntity {
     private Long lastUpdateUserId;
 
 
-   /* @PrePersist
+    @PrePersist
     private void onPrePersist(){
         this.insertDateTime = LocalDateTime.now();
         this.lastUpdateDateTime=LocalDateTime.now();
@@ -40,7 +40,7 @@ public class BaseEntity {
     private void onPreUpdate(){
         this.lastUpdateDateTime=LocalDateTime.now();
         this.lastUpdateUserId=1L;
-    }*/
+    }
 
 
 

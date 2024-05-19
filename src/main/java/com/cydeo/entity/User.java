@@ -27,7 +27,7 @@ public class User extends BaseEntity{
     private String password;
     private boolean enabled;
     private String phone;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Role role;
     private Gender gender;
 

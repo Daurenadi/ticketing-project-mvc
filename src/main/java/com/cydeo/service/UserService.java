@@ -8,4 +8,5 @@ import java.util.List;
 public interface UserService {
     List<UserDTO> listAllUsers();
     void save(UserDTO user);
+    UserDTO findById(Long Id);
 }
