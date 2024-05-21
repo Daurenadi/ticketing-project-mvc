@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 
@@ -15,26 +17,23 @@ import java.time.LocalDate;
 @AllArgsConstructor
 
 public class ProjectDTO {
-
+    @NotBlank
     private String projectName;
+    @NotBlank
     private String projectCode;
+    @NotNull
     private UserDTO userDTO;
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate assignedDate;
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate projectEndDate;
+    @NotBlank
     private String projectDetail;
     private ProjectStatus status;
     private int completeTaskCounts;
     private int unfinishedTaskCounts;
 
-    public ProjectDTO(String projectName, String projectCode, UserDTO userDTO, LocalDate assignedDate, LocalDate projectEndDate, String projectDetail, ProjectStatus status) {
-        this.projectName = projectName;
-        this.projectCode = projectCode;
-        this.userDTO = userDTO;
-        this.assignedDate = assignedDate;
-        this.projectEndDate = projectEndDate;
-        this.projectDetail = projectDetail;
-        this.status = status;
-    }
+
 }

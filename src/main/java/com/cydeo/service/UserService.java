@@ -12,7 +12,7 @@ public interface UserService {
 
     void update(UserDTO user);
     void delete(String username);
-    List<UserDTO> findManagers();
+    List<UserDTO> findManagers(String role);
 
 
 }

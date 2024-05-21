@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity
@@ -32,6 +29,7 @@ public class User extends BaseEntity{
     private String phone;
     @ManyToOne
     private Role role;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
 

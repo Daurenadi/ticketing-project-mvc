@@ -3,15 +3,16 @@ package com.cydeo.controller;
 
 import com.cydeo.dto.ProjectDTO;
 
-import com.cydeo.dto.UserDTO;
+
 import com.cydeo.service.ProjectService;
 
 import com.cydeo.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 
 
 @Controller
@@ -31,16 +32,25 @@ public class ProjectController {
     public String createProject(Model model){
 
         model.addAttribute("project", new ProjectDTO());
-        model.addAttribute("managers", userService.findManagers());
+        model.addAttribute("managers", userService.findManagers("manager"));
         model.addAttribute("projects", projectService.findAll());
 
 
 
         return "/project/create";
     }
-/*
+
     @PostMapping("/create")
-    public String insertProject(@ModelAttribute("project") ProjectDTO project){
+    public String insertProject(@ModelAttribute("project") ProjectDTO project, BindingResult bindingResult, Model model){
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("managers", userService.findManagers("manager"));
+            model.addAttribute("projects", projectService.findAll());
+
+
+
+        }
 
         projectService.save(project);
 
@@ -48,7 +58,7 @@ public class ProjectController {
         return "redirect:/project/create";
 
     }
-
+/*
     @GetMapping("/delete/{projectCode}")
     public String deleteProject(@PathVariable("projectCode") String projectCode){
 

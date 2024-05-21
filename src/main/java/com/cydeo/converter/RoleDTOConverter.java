@@ -14,8 +14,8 @@ public class RoleDTOConverter implements Converter<String, RoleDTO> {
 
     RoleService roleService;
 
-    @Lazy
-    public RoleDTOConverter(RoleService roleService) {
+
+    public RoleDTOConverter(@Lazy RoleService roleService) {
         this.roleService = roleService;
     }
 

@@ -9,6 +9,6 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User,Long> {
 
     User findByUserName(String username);
-    List<User> findAllByRole_DescriptionContainingIgnoreCase(String description);
+    List<User> findByRoleDescriptionIgnoreCase(String role);
 
 }
