@@ -6,13 +6,17 @@ import com.cydeo.entity.User;
 import com.cydeo.mapper.UserMapper;
 import com.cydeo.repository.UserRepository;
 import com.cydeo.service.UserService;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -35,9 +39,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findById(Long Id) {
-        User user = userRepository.findById(Id)
-                .orElseThrow(() -> new IllegalArgumentException("Role not found for id: " + Id));
+    public UserDTO findById(String username) {
+        User user = userRepository.findByUserName(username);
+
         return userMapper.convertToDTO(user);
+    }
+
+    @Override
+    public void update(UserDTO user) {
+        User userEntity = userRepository.findByUserName(user.getUserName());
+        User convertedUser = userMapper.convertToEntity(user);
+        convertedUser.setId(userEntity.getId());
+        userRepository.save(convertedUser);
+    }
+
+    @Override
+    @Transactional
+    public void delete(String username) {
+
+       User userEntity = userRepository.findByUserName(username);
+       userEntity.setIsDeleted(true);
+       userRepository.save(userEntity);
+    }
+
+    @Override
+    public List<UserDTO> findManagers() {
+        List<User> managersEntities = userRepository.findAllByRole_DescriptionContainingIgnoreCase("manager");
+       return managersEntities.stream()
+                .map(userMapper::convertToDTO)
+                .collect(Collectors.toList());
     }
 }

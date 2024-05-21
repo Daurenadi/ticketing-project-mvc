@@ -22,21 +22,21 @@ public class UserController {
     }
 
     @GetMapping("/create")
-    public String createUser(Model model){
+    public String createUser(Model model) {
 
-    model.addAttribute("user", new UserDTO());
-    model.addAttribute("roles", roleService.listAllRoles());
-    model.addAttribute("users", userService.listAllUsers());
+        model.addAttribute("user", new UserDTO());
+        model.addAttribute("roles", roleService.listAllRoles());
+        model.addAttribute("users", userService.listAllUsers());
 
         return "/user/create";
     }
 
 
- @PostMapping("/create")
+    @PostMapping("/create")
     public String insertUser(@ModelAttribute("user") UserDTO user, BindingResult bindingResult,
-    Model model){
+                             Model model) {
 
-        if(bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
             model.addAttribute("roles", roleService.listAllRoles());
             model.addAttribute("users", userService.listAllUsers());
             return "/user/create";
@@ -47,18 +47,19 @@ public class UserController {
         return "redirect:/user/create";
 
     }
-/*
+
     @GetMapping("/update/{username}")
-    public String editUser(@PathVariable("username") String username, Model model){
+    public String editUser(@PathVariable("username") String username, Model model) {
         model.addAttribute("user", userService.findById(username));
-        model.addAttribute("roles", roleService.findAll());
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("roles", roleService.listAllRoles());
+        model.addAttribute("users", userService.listAllUsers());
 
         return "/user/update";
     }
 
+
     @PostMapping("/update")
-    public String updateUser(@Valid @ModelAttribute("user") UserDTO user){
+    public String updateUser(@ModelAttribute("user") UserDTO user) {
 
         userService.update(user);
 
@@ -67,13 +68,15 @@ public class UserController {
 
     }
 
-    @GetMapping("delete/{username}")
-    public String deleteUser(@PathVariable("username") String username, Model model){
 
-      userService.deleteById(username);
+    @GetMapping("delete/{username}")
+    public String deleteUser(@PathVariable("username") String username, Model model) {
+
+        userService.delete(username);
 
         return "redirect:/user/create";
-    }*/
 
+
+    }
 }
 

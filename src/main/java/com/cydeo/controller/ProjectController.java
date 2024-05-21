@@ -1,4 +1,4 @@
-/*
+
 package com.cydeo.controller;
 
 import com.cydeo.dto.ProjectDTO;
@@ -38,7 +38,7 @@ public class ProjectController {
 
         return "/project/create";
     }
-
+/*
     @PostMapping("/create")
     public String insertProject(@ModelAttribute("project") ProjectDTO project){
 
@@ -107,5 +107,7 @@ public class ProjectController {
         projectService.complete(projectService.findById(projectCode));
         return "redirect:/project/manager/project-status";
     }
+    */
+
 }
-*/
+
