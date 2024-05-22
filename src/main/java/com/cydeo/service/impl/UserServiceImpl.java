@@ -46,6 +46,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO findByUserName(String username) {
+        User user = userRepository.findByUserName(username);
+        return userMapper.convertToDTO(user);
+    }
+
+    @Override
     public void update(UserDTO user) {
         User userEntity = userRepository.findByUserName(user.getUserName());
         User convertedUser = userMapper.convertToEntity(user);
@@ -63,10 +69,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> findManagers(String role) {
-        List<User> managersEntities = userRepository.findByRoleDescriptionIgnoreCase(role);
-       return managersEntities.stream()
-                .map(userMapper::convertToDTO)
+    public List<UserDTO> ListAllByRole(String role) {
+        List<User> list = userRepository.findByRoleDescriptionIgnoreCase(role);
+        return list.stream().map(userMapper::convertToDTO)
                 .collect(Collectors.toList());
     }
 }

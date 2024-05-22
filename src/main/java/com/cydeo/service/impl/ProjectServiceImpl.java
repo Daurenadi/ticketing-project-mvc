@@ -41,7 +41,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public void save(ProjectDTO projectDTO) {
-        projectDTO.setStatus(ProjectStatus.OPEN);
+        projectDTO.setProjectStatus(ProjectStatus.OPEN);
        Project project = projectMapper.convertToEntity(projectDTO);
        projectRepository.save(project);
     }

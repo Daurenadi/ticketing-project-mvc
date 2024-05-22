@@ -10,9 +10,11 @@ public interface UserService {
     void save(UserDTO user);
     UserDTO findById(String username);
 
+    UserDTO findByUserName(String username);
+
     void update(UserDTO user);
     void delete(String username);
-    List<UserDTO> findManagers(String role);
+    List<UserDTO> ListAllByRole(String role);
 
 
 }

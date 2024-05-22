@@ -22,7 +22,6 @@ public class ProjectController {
     private final UserService userService;
     private final ProjectService projectService;
 
-
     public ProjectController(UserService userService, ProjectService projectService) {
         this.userService = userService;
         this.projectService = projectService;
@@ -32,7 +31,7 @@ public class ProjectController {
     public String createProject(Model model){
 
         model.addAttribute("project", new ProjectDTO());
-        model.addAttribute("managers", userService.findManagers("manager"));
+        model.addAttribute("managers", userService.ListAllByRole("manager"));
         model.addAttribute("projects", projectService.findAll());
 
 
@@ -43,14 +42,14 @@ public class ProjectController {
     @PostMapping("/create")
     public String insertProject(@ModelAttribute("project") ProjectDTO project, BindingResult bindingResult, Model model){
 
-        if (bindingResult.hasErrors()) {
+      //  if (bindingResult.hasErrors()) {
 
-            model.addAttribute("managers", userService.findManagers("manager"));
+            model.addAttribute("managers", userService.ListAllByRole("manager"));
             model.addAttribute("projects", projectService.findAll());
 
 
 
-        }
+       // }
 
         projectService.save(project);
 

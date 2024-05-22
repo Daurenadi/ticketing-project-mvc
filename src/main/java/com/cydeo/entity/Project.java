@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -19,16 +20,17 @@ public class Project extends BaseEntity {
 
     private String projectName;
     private String projectCode;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "manager_id")
-    private User user;
+    private User assignedManager;
     @Column(columnDefinition = "DATE")
-    private LocalDate assignedDate;
+    private LocalDate startDate;
     @Column(columnDefinition = "DATE")
-    private LocalDate projectEndDate;
+    private LocalDate endDate;
     private String projectDetail;
     @Enumerated(EnumType.STRING)
-    private ProjectStatus status;
+    private ProjectStatus projectStatus;
+    @NotNull
     private int completeTaskCounts;
     private int unfinishedTaskCounts;
 }

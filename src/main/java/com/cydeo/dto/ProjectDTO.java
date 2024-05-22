@@ -17,21 +17,22 @@ import java.time.LocalDate;
 @AllArgsConstructor
 
 public class ProjectDTO {
+
     @NotBlank
     private String projectName;
     @NotBlank
     private String projectCode;
     @NotNull
-    private UserDTO userDTO;
+    private UserDTO assignedManager;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate assignedDate;
+    private LocalDate startDate;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate projectEndDate;
+    private LocalDate endDate;
     @NotBlank
     private String projectDetail;
-    private ProjectStatus status;
+    private ProjectStatus projectStatus;
     private int completeTaskCounts;
     private int unfinishedTaskCounts;
 
