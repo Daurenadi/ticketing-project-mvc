@@ -24,6 +24,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public List<ProjectDTO> findAll() {
         List<Project> projectEntities = projectRepository.findAll();
         return projectEntities.stream()

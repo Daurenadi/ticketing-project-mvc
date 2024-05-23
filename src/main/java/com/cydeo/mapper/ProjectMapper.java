@@ -3,9 +3,10 @@ package com.cydeo.mapper;
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.entity.Project;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class ProjectMapper {
 
    private final ModelMapper modelMapper;
