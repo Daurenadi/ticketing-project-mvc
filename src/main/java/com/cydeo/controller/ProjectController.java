@@ -12,7 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
+import javax.transaction.Transactional;
 
 
 @Controller
@@ -57,7 +57,7 @@ public class ProjectController {
         return "redirect:/project/create";
 
     }
-/*
+
     @GetMapping("/delete/{projectCode}")
     public String deleteProject(@PathVariable("projectCode") String projectCode){
 
@@ -71,22 +71,26 @@ public class ProjectController {
     @GetMapping("/complete/{projectCode}")
     private String completeProject(@PathVariable("projectCode") String projectCode){
 
-        projectService.complete(projectService.findById(projectCode));
+        projectService.complete(projectCode);
 
         return "redirect:/project/create";
     }
 
+
+
     @GetMapping("/update/{projectCode}")
     public String editUser(@PathVariable("projectCode") String projectCode, Model model){
-        model.addAttribute("project", projectService.findById(projectCode));
-        model.addAttribute("managers", userService.findManagers());
+        model.addAttribute("project", projectService.findByProjectCode(projectCode));
+        model.addAttribute("managers", userService.ListAllByRole("manager"));
         model.addAttribute("projects", projectService.findAll());
 
         return "/project/update";
     }
 
+
     @PostMapping("/update")
     public String updateUser(@ModelAttribute("project") ProjectDTO project){
+
 
 
 
@@ -96,6 +100,7 @@ public class ProjectController {
         return "redirect:/project/create";
 
     }
+    /*
 
     @GetMapping("/manager/project-status")
     public String getProjectByManager(Model model) {

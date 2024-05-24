@@ -10,5 +10,9 @@ ProjectDTO findByProjectCode(String code);
 
 void save(ProjectDTO projectDTO);
 
+void deleteById(String projectCode);
+void complete(String projectCode);
+void update(ProjectDTO projectDTO);
+
 
 }
