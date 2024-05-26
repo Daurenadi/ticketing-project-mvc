@@ -1,17 +1,14 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.dto.UserDTO;
-import com.cydeo.entity.Role;
 import com.cydeo.entity.User;
-import com.cydeo.mapper.UserMapper;
+import com.cydeo.mapper.MapperUtil;
 import com.cydeo.repository.UserRepository;
 import com.cydeo.service.UserService;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,42 +16,44 @@ public class UserServiceImpl implements UserService {
 
 
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private final MapperUtil mapperUtil;
 
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, MapperUtil mapperUtil) {
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
+        this.mapperUtil = mapperUtil;
     }
 
     @Override
     public List<UserDTO> listAllUsers() {
        List<User> list = userRepository.findAll();
-       return list.stream().map(userMapper::convertToDTO).collect(Collectors.toList());
+       return list.stream()
+               .map(user -> mapperUtil.convert(user, UserDTO.class))
+               .collect(Collectors.toList());
 
     }
 
     @Override
     public void save(UserDTO user) {
-        userRepository.save(userMapper.convertToEntity(user));
+        userRepository.save(mapperUtil.convert(user, User.class));
     }
 
     @Override
     public UserDTO findById(String username) {
         User user = userRepository.findByUserName(username);
 
-        return userMapper.convertToDTO(user);
+        return mapperUtil.convert(user, UserDTO.class);
     }
 
     @Override
     public UserDTO findByUserName(String username) {
         User user = userRepository.findByUserName(username);
-        return userMapper.convertToDTO(user);
+        return mapperUtil.convert(user, UserDTO.class);
     }
 
     @Override
     public void update(UserDTO user) {
         User userEntity = userRepository.findByUserName(user.getUserName());
-        User convertedUser = userMapper.convertToEntity(user);
+        User convertedUser = mapperUtil.convert(user, User.class);
         convertedUser.setId(userEntity.getId());
         userRepository.save(convertedUser);
     }
@@ -72,7 +71,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public List<UserDTO> ListAllByRole(String role) {
         List<User> list = userRepository.findByRoleDescriptionIgnoreCase(role);
-        return list.stream().map(userMapper::convertToDTO)
+        return list.stream().map(user -> mapperUtil.convert(user, UserDTO.class))
                 .collect(Collectors.toList());
     }
 }

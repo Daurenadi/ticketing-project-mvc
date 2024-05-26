@@ -1,19 +1,14 @@
-/*
 package com.cydeo.controller;
 
 import com.cydeo.dto.TaskDTO;
-import com.cydeo.enums.ProjectStatus;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
-import jdk.javadoc.doclet.DocletEnvironment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.StringBufferInputStream;
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/task")
@@ -22,7 +17,6 @@ public class TaskController {
 
     private final ProjectService projectService;
     private final UserService userService;
-
     private final TaskService taskService;
 
     public TaskController(ProjectService projectService, UserService userService, TaskService taskService) {
@@ -36,19 +30,32 @@ public class TaskController {
 
         model.addAttribute("task", new TaskDTO());
         model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("employees", userService.findEmployees());
+        model.addAttribute("employees", userService.ListAllByRole("employee"));
         model.addAttribute("tasks", taskService.findAll());
 
 
         return "/task/create";
     }
     @PostMapping("/create")
-    public String insertTask(TaskDTO task){
+    public String insertTask(@ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("projects", projectService.findAll());
+            model.addAttribute("employees", userService.ListAllByRole("employee"));
+            model.addAttribute("tasks", taskService.listAllTasks());
+
+            return "/task/create";
+
+        }
 
         taskService.save(task);
 
         return "redirect:/task/create";
+
     }
+
+
 
     @GetMapping("/delete/{taskId}")
     private String deleteTask(@PathVariable("taskId") Long taskId){
@@ -58,24 +65,38 @@ public class TaskController {
         return "redirect:/task/create";
     }
 
+
+
     @GetMapping("/update/{taskId}")
     private String editTask(@PathVariable("taskId") Long taskId, Model model){
 
         model.addAttribute("task", taskService.findById(taskId));
         model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("employees", userService.findEmployees());
+        model.addAttribute("employees", userService.ListAllByRole("employee"));
         model.addAttribute("tasks", taskService.findAll());
 
         return "/task/update";
     }
 
     @PostMapping("/update/{id}")
-    private String updateTask(TaskDTO task){
+    public String updateTask(@ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("projects", projectService.findAll());
+            model.addAttribute("employees", userService.ListAllByRole("employee"));
+            model.addAttribute("tasks", taskService.listAllTasks());
+
+            return "/task/update";
+
+        }
 
         taskService.update(task);
 
         return "redirect:/task/create";
+
     }
+    /*
 
     @GetMapping("/employee/pending-tasks")
     public String employeePendingTasks(Model model){
@@ -94,6 +115,8 @@ public class TaskController {
 
         return "/task/archive";
     }
+
+
 
     @GetMapping("/employee/edit/{id}")
     public String employeeEditTask(@PathVariable Long id, Model model){
@@ -124,6 +147,8 @@ public class TaskController {
 
     }
 
+/*
+     */
 
 }
-*/
+

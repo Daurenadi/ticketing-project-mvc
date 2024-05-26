@@ -2,10 +2,12 @@ package com.cydeo.service.impl;
 
 import com.cydeo.dto.RoleDTO;
 import com.cydeo.entity.Role;
-import com.cydeo.mapper.RoleMapper;
+import com.cydeo.mapper.MapperUtil;
 import com.cydeo.repository.RoleRepository;
 import com.cydeo.service.RoleService;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,24 +15,26 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
-    private final RoleMapper roleMapper;
+    private final MapperUtil mapperUtil;
 
-    public RoleServiceImpl(RoleRepository roleRepository, RoleMapper roleMapper) {
+    public RoleServiceImpl(RoleRepository roleRepository, MapperUtil mapperUtil) {
         this.roleRepository = roleRepository;
-        this.roleMapper = roleMapper;
+        this.mapperUtil = mapperUtil;
     }
 
     @Override
     public List<RoleDTO> listAllRoles() {
         List<Role> list = roleRepository.findAll();
-        return list.stream().map(roleMapper::convertToDTO).collect(Collectors.toList());
+        return list.stream()
+                .map(role -> mapperUtil.convert(role, RoleDTO.class))
+                .collect(Collectors.toList());
     }
 
     @Override
     public RoleDTO findById(Long Id) {
         Role role = roleRepository.findById(Id)
                 .orElseThrow(() -> new IllegalArgumentException("Role not found for id: " + Id));
-        return roleMapper.convertToDTO(role);
+        return mapperUtil.convert(role, RoleDTO.class);
     }
 
 

@@ -3,13 +3,12 @@ package com.cydeo.service.impl;
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.entity.Project;
 import com.cydeo.enums.ProjectStatus;
-import com.cydeo.mapper.ProjectMapper;
+import com.cydeo.mapper.MapperUtil;
 import com.cydeo.repository.ProjectRepository;
 import com.cydeo.service.ProjectService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,11 +16,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class ProjectServiceImpl implements ProjectService {
 
-    private final ProjectMapper projectMapper;
+    private final MapperUtil mapperUtil;
     private final ProjectRepository projectRepository;
 
-    public ProjectServiceImpl(ProjectMapper projectMapper, ProjectRepository projectRepository) {
-        this.projectMapper = projectMapper;
+    public ProjectServiceImpl(MapperUtil mapperUtil, ProjectRepository projectRepository) {
+        this.mapperUtil = mapperUtil;
         this.projectRepository = projectRepository;
     }
 
@@ -29,7 +28,7 @@ public class ProjectServiceImpl implements ProjectService {
     public List<ProjectDTO> findAll() {
         List<Project> projectEntities = projectRepository.findAll();
         return projectEntities.stream()
-                .map(projectMapper::convertToDTO)
+                .map(project -> mapperUtil.convert(project, ProjectDTO.class))
                 .collect(Collectors.toList());
 
     }
@@ -37,13 +36,13 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectDTO findByProjectCode(String code) {
         Project project = projectRepository.findByProjectCode(code);
-        return projectMapper.convertToDTO(project);
+        return mapperUtil.convert(project, ProjectDTO.class);
     }
 
     @Override
     public void save(ProjectDTO projectDTO) {
         projectDTO.setProjectStatus(ProjectStatus.OPEN);
-       Project project = projectMapper.convertToEntity(projectDTO);
+       Project project = mapperUtil.convert(projectDTO,Project.class);
        projectRepository.save(project);
     }
 
@@ -64,7 +63,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void update(ProjectDTO projectDTO) {
         Project project = projectRepository.findByProjectCode(projectDTO.getProjectCode());
-        Project convertedProject = projectMapper.convertToEntity(projectDTO);
+        Project convertedProject = mapperUtil.convert(projectDTO, Project.class);
         convertedProject.setId(project.getId());
         convertedProject.setProjectStatus(project.getProjectStatus());
         projectRepository.save(convertedProject);

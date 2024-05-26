@@ -31,7 +31,7 @@ public class Project extends BaseEntity {
     private String projectDetail;
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
-    @NotNull
-    private int completeTaskCounts;
-    private int unfinishedTaskCounts;
+   // @NotNull
+   // private int completeTaskCounts;
+   // private int unfinishedTaskCounts;
 }
