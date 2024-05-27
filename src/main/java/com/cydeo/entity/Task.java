@@ -1,7 +1,6 @@
 package com.cydeo.entity;
 
-import com.cydeo.enums.ProjectStatus;
-import lombok.AllArgsConstructor;
+import com.cydeo.enums.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +26,7 @@ public class Task extends BaseEntity{
     private String taskSubject;
     private String taskDetail;
     @Enumerated(EnumType.STRING)
-    private ProjectStatus taskStatus;
+    private Status taskStatus;
     private LocalDate assignedDate;
 
 }

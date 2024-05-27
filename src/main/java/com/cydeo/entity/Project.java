@@ -1,13 +1,12 @@
 package com.cydeo.entity;
 
 
-import com.cydeo.enums.ProjectStatus;
+import com.cydeo.enums.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -30,7 +29,7 @@ public class Project extends BaseEntity {
     private LocalDate endDate;
     private String projectDetail;
     @Enumerated(EnumType.STRING)
-    private ProjectStatus projectStatus;
+    private Status projectStatus;
    // @NotNull
    // private int completeTaskCounts;
    // private int unfinishedTaskCounts;

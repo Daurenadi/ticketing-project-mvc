@@ -1,6 +1,7 @@
 package com.cydeo.controller;
 
 import com.cydeo.dto.TaskDTO;
+import com.cydeo.enums.Status;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
@@ -96,12 +97,12 @@ public class TaskController {
         return "redirect:/task/create";
 
     }
-    /*
+
 
     @GetMapping("/employee/pending-tasks")
     public String employeePendingTasks(Model model){
 
-        model.addAttribute("tasks", taskService.findAllPendingTasks(ProjectStatus.COMPLETE));
+        model.addAttribute("tasks", taskService.findAllPendingTasks(Status.COMPLETE));
 
 
 
@@ -111,7 +112,7 @@ public class TaskController {
     @GetMapping("/employee/archive")
     public String employeeArchivedTasks(Model model){
 
-        model.addAttribute("tasks", taskService.findAllCompleteTasks(ProjectStatus.COMPLETE));
+        model.addAttribute("tasks", taskService.findAllCompleteTasks(Status.COMPLETE));
 
         return "/task/archive";
     }
@@ -123,19 +124,19 @@ public class TaskController {
 
       model.addAttribute("task", taskService.findById(id));
 
-        model.addAttribute("statuses", ProjectStatus.values());
-        model.addAttribute("tasks", taskService.findAllPendingTasks(ProjectStatus.COMPLETE));
+        model.addAttribute("statuses", Status.values());
+        model.addAttribute("tasks", taskService.findAllPendingTasks(Status.COMPLETE));
 
         return "/task/status-update";
     }
 
     @PostMapping("/employee/update/{id}")
-    public String employeeUpdateTask(@Valid @ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
+    public String employeeUpdateTask(@ModelAttribute("task") TaskDTO task, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
 
-            model.addAttribute("statuses", ProjectStatus.values());
-            model.addAttribute("tasks", taskService.findAllPendingTasks(ProjectStatus.COMPLETE));
+            model.addAttribute("statuses", Status.values());
+            model.addAttribute("tasks", taskService.findAllPendingTasks(Status.COMPLETE));
 
             return "/task/status-update";
 
@@ -147,8 +148,8 @@ public class TaskController {
 
     }
 
-/*
-     */
+
+
 
 }
 

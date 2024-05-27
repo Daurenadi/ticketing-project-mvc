@@ -2,7 +2,7 @@ package com.cydeo.dto;
 
 
 
-import com.cydeo.enums.ProjectStatus;
+import com.cydeo.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,7 +28,7 @@ public class TaskDTO {
     @NotBlank
     private String taskDetail;
 
-    private ProjectStatus taskStatus;
+    private Status taskStatus;
     private LocalDate assignedDate;
 
 

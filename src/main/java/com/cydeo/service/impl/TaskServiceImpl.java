@@ -1,7 +1,7 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.dto.TaskDTO;
-import com.cydeo.enums.ProjectStatus;
+import com.cydeo.enums.Status;
 import com.cydeo.mapper.MapperUtil;
 import com.cydeo.repository.ProjectRepository;
 import com.cydeo.repository.TaskRepository;
@@ -33,7 +33,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void save(TaskDTO taskDTO) {
-        taskDTO.setTaskStatus(ProjectStatus.OPEN);
+        taskDTO.setTaskStatus(Status.OPEN);
         taskDTO.setAssignedDate(LocalDate.now());
         Task task = mapperUtil.convert(taskDTO, Task.class);
         taskRepository.save(task);
@@ -88,4 +88,30 @@ public class TaskServiceImpl implements TaskService {
     }
 
 
+    @Override
+    public List<TaskDTO> findAllPendingTasks(Status status) {
+        List<Task> list = taskRepository.findAllByTaskStatusIsNot(status);
+        return list.stream()
+                .map(task -> mapperUtil.convert(task, TaskDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDTO> findAllCompleteTasks(Status status) {
+        List<Task> list = taskRepository.findAllByTaskStatusIs(status);
+        return list.stream()
+                .map(task -> mapperUtil.convert(task, TaskDTO.class))
+                .collect(Collectors.toList());
+    }
+
+   @Override
+   public void updateTask(TaskDTO taskDTO) {
+         Optional<Task> task = taskRepository.findById(taskDTO.getId());
+         Task convertedtask = mapperUtil.convert(taskDTO, Task.class);
+         if(task.isPresent()){
+
+             task.get().setTaskStatus(convertedtask.getTaskStatus());
+             taskRepository.save(task.get());
+         }
+    }
 }

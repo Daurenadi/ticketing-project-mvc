@@ -1,6 +1,6 @@
 package com.cydeo.dto;
 
-import com.cydeo.enums.ProjectStatus;
+import com.cydeo.enums.Status;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotBlank;
@@ -32,7 +32,7 @@ public class ProjectDTO {
     private LocalDate endDate;
     @NotBlank
     private String projectDetail;
-    private ProjectStatus projectStatus;
+    private Status status;
     private int completeTaskCounts;
     private int unfinishedTaskCounts;
 
