@@ -108,6 +108,13 @@ public class TaskServiceImpl implements TaskService {
    public void updateTask(TaskDTO taskDTO) {
          Optional<Task> task = taskRepository.findById(taskDTO.getId());
          Task convertedtask = mapperUtil.convert(taskDTO, Task.class);
+         if(task.isPresent()) {
+             convertedtask.setId(task.get().getId());
+             convertedtask.setAssignedDate(task.get().getAssignedDate());
+             taskRepository.save(convertedtask);
+         }else{throw new RuntimeException("Task not found");}
+
+
 
 
     }
